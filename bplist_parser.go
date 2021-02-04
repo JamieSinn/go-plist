@@ -11,6 +11,7 @@ import (
 	"runtime"
 	"time"
 	"unicode/utf16"
+	"strconv"
 )
 
 const (
@@ -137,7 +138,7 @@ func (p *bplistParser) parseSizedInteger(off offset, nbytes int) (lo uint64, hi 
 	case 16:
 		lo, hi = binary.BigEndian.Uint64(p.buffer[off+8:]), binary.BigEndian.Uint64(p.buffer[off:])
 	default:
-		panic(errors.New("illegal integer size"))
+		panic(errors.New("illegal integer size: " + strconv.Itoa(nbytes)))
 	}
 	newOffset = off + offset(nbytes)
 	return
